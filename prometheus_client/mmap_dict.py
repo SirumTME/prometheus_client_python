@@ -3,7 +3,7 @@ import mmap
 import os
 import struct
 
-_INITIAL_MMAP_SIZE = 1 << 20
+_INITIAL_MMAP_SIZE = 1 << 16
 _pack_integer_func = struct.Struct(b'i').pack
 _pack_double_func = struct.Struct(b'd').pack
 _unpack_integer = struct.Struct(b'i').unpack_from
@@ -65,7 +65,8 @@ class MmapedDict(object):
             self._f.truncate(_INITIAL_MMAP_SIZE)
             capacity = _INITIAL_MMAP_SIZE
         self._capacity = capacity
-        self._m = mmap.mmap(self._f.fileno(), self._capacity, flags=mmap.MAP_PRIVATE)
+        self._m = mmap.mmap(self._f.fileno(), self._capacity,
+                            access=mmap.ACCESS_READ if read_mode else mmap.ACCESS_WRITE)
 
         self._positions = {}
         self._used = _unpack_integer(self._m, 0)[0]
