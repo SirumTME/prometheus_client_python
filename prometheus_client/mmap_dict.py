@@ -66,6 +66,7 @@ class MmapedDict(object):
             capacity = _INITIAL_MMAP_SIZE
         self._capacity = capacity
         self._m = mmap.mmap(self._f.fileno(), self._capacity,
+                            flags=mmap.MAP_PRIVATE,
                             access=mmap.ACCESS_READ if read_mode else mmap.ACCESS_WRITE)
 
         self._positions = {}
