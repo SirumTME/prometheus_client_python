@@ -65,9 +65,7 @@ class MmapedDict(object):
             self._f.truncate(_INITIAL_MMAP_SIZE)
             capacity = _INITIAL_MMAP_SIZE
         self._capacity = capacity
-        self._m = mmap.mmap(self._f.fileno(), self._capacity,
-                            flags=mmap.MAP_PRIVATE,
-                            access=mmap.ACCESS_READ if read_mode else mmap.ACCESS_WRITE)
+        self._m = mmap.mmap(self._f.fileno(), self._capacity, flags=mmap.MAP_PRIVATE)
 
         self._positions = {}
         self._used = _unpack_integer(self._m, 0)[0]
