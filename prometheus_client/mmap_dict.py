@@ -24,7 +24,7 @@ def _pack_integer(data, pos, value):
 
 def _read_all_values(data, used=0):
     """Yield (key, value, pos). No locking is performed."""
-
+    import wdb; wdb.set_trace()
     if used <= 0:
         # If not valid `used` value is passed in, read it from the file.
         used = _unpack_integer(data, 0)[0]
